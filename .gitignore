@@ -1,2 +1,4 @@
-memo.txt
-config.json
+node_modules/
+build/
+auth_config.json
+.envrc
