@@ -1,5 +1,5 @@
 {
-  "name": "laundry-monitoring-service-website",
+  "name": "laundry-monitoring-service-web",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -39,7 +39,7 @@
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync ./build s3://laundry-monitoring-service-website-prod --public-acl",
+    "deploy": "aws s3 sync ./build s3://laundry-monitoring-service-web-prod --acl public-read",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -60,7 +60,7 @@
   },
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com-sa:seiichi1101/laundry-monitoring-service-website.git",
+  "repository": "git@github.com-sa:seiichi1101/laundry-monitoring-service-web.git",
   "author": "seiichi1101 <seiichi19881101@gmail.com>",
   "license": "MIT",
   "devDependencies": {
