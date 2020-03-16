@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { Button, createStyles } from "@material-ui/core";
+import { Button, createStyles, IconButton } from "@material-ui/core";
 import { makeStyles } from '@material-ui/styles';
 import { Event } from '@material-ui/icons'
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import { Actions } from "../actions"
 import { useAuth0 } from "../auth0"
 import { listImgUrl } from "../api"
@@ -18,6 +19,7 @@ const useStyles = makeStyles(() =>
     button: {
       background: "default",
       fontSize: "32px",
+      margin: "10px"
     },
     text: {
       fontSize: "32px",
@@ -33,14 +35,14 @@ export function MyDatePicker() {
   const dispatch = useDispatch();
 
 
-  const MyCustomInput = ({ value, onClick }: any) => (
-    <Button
-      className={classes.button}
-      variant="contained"
-      onClick={onClick}
-      startIcon={<Event />}
-    >{value}</Button>
-  );
+  const handleReload = async () => {
+    const currentDate = new Date()
+    const accessToken = await getTokenSilently()
+    const prefix = moment(currentDate).format("YYYY/MM/DD/HH")
+    const imgList = await listImgUrl(accessToken, prefix)
+    dispatch(Actions.updateImages(imgList))
+    dispatch(Actions.updateDate(currentDate))
+  }
 
   const handleChange = async (datetime: Date) => {
     const accessToken = await getTokenSilently()
@@ -49,6 +51,23 @@ export function MyDatePicker() {
     dispatch(Actions.updateImages(imgList))
     dispatch(Actions.updateDate(datetime))
   }
+
+  const MyCustomInput = ({ value, onClick }: any) => (
+    <>
+      <Button
+        className={classes.button}
+        variant="contained"
+        onClick={onClick}
+        startIcon={<Event />}
+      >{value}</Button>
+      <IconButton
+        className={classes.button}
+        onClick={()=>handleReload()}
+      >
+        <AutorenewIcon />
+      </IconButton>
+    </>
+  );
 
   return (
     <div className={classes.root}>
